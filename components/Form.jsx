@@ -36,7 +36,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           <input
             value={post.tag}
             onChange={(e) => setPost({ ...post, tag: e.target.value })}
-            placeholder='Write your #tags here...'
+            placeholder='Write your tags without # symbol before your tags...'
             required
             className='form_input'
           />
