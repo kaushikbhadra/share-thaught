@@ -5,6 +5,14 @@ import '@styles/globals.css'
 export const metadata = {
   title: 'Promptopia',
   description: 'Discover & Share AI Prompts',
+  icons: [
+    {
+      rel: 'icon',
+      type: 'image/svg',
+      sizes: '32x32',
+      url: '/assets/images/logo.svg',
+    },
+  ],
 }
 
 const RootLayout = ({ children }) => {

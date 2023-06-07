@@ -43,6 +43,7 @@ const Feed = () => {
   }
 
   const handleSearchChange = (e) => {
+    e.preventDefault()
     setSearchText(e.target.value)
     const searchResultItem = searchPrompt(e.target.value)
     setSearchResult(searchResultItem)
