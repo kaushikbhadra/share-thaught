@@ -84,14 +84,16 @@ const MyProfile = () => {
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
-      <Pagination
-        totalPosts={totalPostsSize}
-        postPerPage={limit}
-        totalPages={totalPages}
-        currentPage={currentPage}
-        skip={skip}
-        isProfilePage={true}
-      />
+      {posts.length !== 0 && (
+        <Pagination
+          totalPosts={totalPostsSize}
+          postPerPage={limit}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          skip={skip}
+          isProfilePage={true}
+        />
+      )}
     </>
   )
 }

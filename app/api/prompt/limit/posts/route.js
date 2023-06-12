@@ -4,7 +4,6 @@ import Prompt from '@models/prompt'
 export const GET = async (req) => {
   let limit = req.nextUrl.searchParams.get('limit')
   let skip = req.nextUrl.searchParams.get('skip')
-
   try {
     await connectToDB()
     const prompts = await Prompt.find({})

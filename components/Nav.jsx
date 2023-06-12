@@ -1,22 +1,18 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { signIn, signOut, getProviders, useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const Nav = () => {
   const { data: session } = useSession()
-  const [providers, setProviders] = useState(null)
   const [toggleDropdown, setToggleDropdown] = useState(false)
-
-  useEffect(() => {
-    const setUpProviders = async () => {
-      const response = await getProviders()
-      setProviders(response)
-    }
-    setUpProviders()
-  }, [])
+  const router = useRouter()
+  const login = () => {
+    router.push('/signin')
+  }
   return (
     <nav className='flex-between w-full mb-16 pt-3'>
       <Link href='/' className='flex gap-2 flex-center'>
@@ -36,7 +32,11 @@ const Nav = () => {
             <Link href='/create-prompt' className='black_btn'>
               Create Post
             </Link>
-            <button type='button' onClick={signOut} className='outline_btn'>
+            <button
+              type='button'
+              onClick={() => signOut()}
+              className='outline_btn'
+            >
               Sign Out
             </button>
             <Link href='/profile'>
@@ -50,19 +50,9 @@ const Nav = () => {
             </Link>
           </div>
         ) : (
-          <>
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type='button'
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className='black_btn'
-                >
-                  Sign In
-                </button>
-              ))}
-          </>
+          <button type='button' onClick={() => login()} className='black_btn'>
+            Sign In
+          </button>
         )}
       </div>
       {/* Mobile Navigation  */}
@@ -97,7 +87,7 @@ const Nav = () => {
                   type='button'
                   onClick={() => {
                     setToggleDropdown(false)
-                    signOut
+                    signOut()
                   }}
                   className='mt-5 w-full black_btn'
                 >
@@ -107,19 +97,9 @@ const Nav = () => {
             )}
           </div>
         ) : (
-          <>
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type='button'
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className='black_btn'
-                >
-                  Sign In
-                </button>
-              ))}
-          </>
+          <button type='button' onClick={() => login()} className='black_btn'>
+            Sign In
+          </button>
         )}
       </div>
     </nav>

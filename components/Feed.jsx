@@ -122,7 +122,7 @@ const Feed = () => {
         <PromptCardList data={posts} handleTagClick={handleTagClick} />
       )}
 
-      {posts && (
+      {posts.length !== 0 && (
         <Pagination
           totalPosts={totalPostsSize}
           postPerPage={postPerPage}
