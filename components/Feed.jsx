@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Pagination from './Pagination'
 import PromptCard from './PromptCard'
 
 const PromptCardList = ({ data, handleTagClick }) => {
@@ -19,17 +21,63 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
   const [searchText, setSearchText] = useState('')
+  const [totalPosts, setTotalPosts] = useState([])
   const [posts, setPosts] = useState([])
   const [searchResult, setSearchResult] = useState([])
+  const serchParams = useSearchParams()
+  const pageNumber = serchParams.get('page')
+
+  const totalPostsSize = totalPosts.length
+  const postPerPage = 6
+
+  const totalPages = Math.ceil(totalPostsSize / postPerPage)
+  let currentPage = 1
+  if (Number(pageNumber) >= 1) {
+    currentPage = Number(pageNumber)
+  }
+
+  let skip = postPerPage * (currentPage - 1)
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch('/api/prompt')
-      const data = await response.json()
-      setPosts(data)
+    const fetchlimitPosts = async () => {
+      try {
+        const response = await fetch(
+          `/api/prompt/limit/posts?limit=${postPerPage}&skip=${skip}`
+        )
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch limit posts')
+        }
+
+        const data = await response.json()
+        setPosts(data)
+      } catch (error) {
+        console.error(error)
+        setPosts([])
+      }
     }
 
-    fetchPosts()
+    fetchlimitPosts()
+  }, [skip])
+
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      try {
+        const response = await fetch(`/api/prompt`)
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch all posts')
+        }
+
+        const data = await response.json()
+        setTotalPosts(data)
+      } catch (error) {
+        console.error(error)
+        setTotalPosts([])
+      }
+    }
+
+    fetchAllPosts()
   }, [])
 
   const searchPrompt = (searchText) => {
@@ -72,6 +120,16 @@ const Feed = () => {
         <PromptCardList data={searchResult} handleTagClick={handleTagClick} />
       ) : (
         <PromptCardList data={posts} handleTagClick={handleTagClick} />
+      )}
+
+      {posts && (
+        <Pagination
+          totalPosts={totalPostsSize}
+          postPerPage={postPerPage}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          skip={skip}
+        />
       )}
     </section>
   )

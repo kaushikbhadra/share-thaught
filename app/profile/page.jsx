@@ -2,24 +2,40 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import Profile from '@components/Profile'
+import Pagination from '@components/Pagination'
 
 const MyProfile = () => {
   const router = useRouter()
   const { data: session } = useSession()
   const [posts, setPosts] = useState([])
+  const [totalPosts, setTotalPosts] = useState([])
+  const serchParams = useSearchParams()
+  const pageNumber = serchParams.get('page')
+
+  const totalPostsSize = totalPosts.length
+  const limit = 3
+  const totalPages = Math.ceil(totalPostsSize / limit)
+  let currentPage = 1
+  if (Number(pageNumber) >= 1) {
+    currentPage = Number(pageNumber)
+  }
+
+  let skip = limit * (currentPage - 1)
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/users/${session?.user.id}/posts`)
+      const response = await fetch(
+        `/api/users/${session?.user.id}/limit/posts?limit=${limit}&&skip=${skip}`
+      )
       const data = await response.json()
       setPosts(data)
     }
 
     if (session?.user.id) fetchPosts()
-  }, [])
+  }, [posts, skip])
 
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`)
@@ -39,14 +55,44 @@ const MyProfile = () => {
     }
   }
 
+  useEffect(() => {
+    const fetchUserAllPosts = async () => {
+      try {
+        const response = await fetch(`/api/users/${session?.user.id}/posts`)
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch all user posts')
+        }
+
+        const data = await response.json()
+        setTotalPosts(data)
+      } catch (error) {
+        console.error(error)
+        setTotalPosts([])
+      }
+    }
+
+    if (session?.user.id) fetchUserAllPosts()
+  }, [posts])
+
   return (
-    <Profile
-      name={'My'}
-      desc='welcome to your personalized profile page'
-      data={posts}
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
-    />
+    <>
+      <Profile
+        name={'My'}
+        desc='welcome to your personalized profile page'
+        data={posts}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+      <Pagination
+        totalPosts={totalPostsSize}
+        postPerPage={limit}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        skip={skip}
+        isProfilePage={true}
+      />
+    </>
   )
 }
 

@@ -55,13 +55,17 @@ const UpdatePrompt = () => {
   }
 
   return (
-    <Form
-      type='Update'
-      post={post}
-      setPost={setPost}
-      submitting={submitting}
-      handleSubmit={editPrompt}
-    />
+    <>
+      {promptId && (
+        <Form
+          type='Update'
+          post={post}
+          setPost={setPost}
+          submitting={submitting}
+          handleSubmit={editPrompt}
+        />
+      )}
+    </>
   )
 }
 
