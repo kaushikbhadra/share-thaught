@@ -23,12 +23,18 @@ const Pagination = ({
     <div className='pagination mb-5 pb-5'>
       <div className='flex flex-1 justify-between sm:hidden'>
         {prevPage >= 1 && (
-          <Link href={`${isProfilePage ? '/profile' : ''}/?page=${prevPage}`} className='btn-sm-pagination'>
+          <Link
+            href={`${isProfilePage ? '/profile' : ''}/?page=${prevPage}`}
+            className='btn-sm-pagination'
+          >
             Previous
           </Link>
         )}
         {nextPage <= totalPages && (
-          <Link href={`${isProfilePage ? '/profile' : ''}/?page=${nextPage}`} className='ml-3 btn-sm-pagination'>
+          <Link
+            href={`${isProfilePage ? '/profile' : ''}/?page=${nextPage}`}
+            className='ml-3 btn-sm-pagination'
+          >
             Next
           </Link>
         )}
