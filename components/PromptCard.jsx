@@ -36,10 +36,10 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
             className='rounded-full object-contain'
           />
           <div className='flex flex-col'>
-            <h3 className='font-santoshi font-semibold text-gray-900'>
+            <h3 className='font-santoshi font-semibold text-gray-900 dark:text-gray-200'>
               {post.creator.username}
             </h3>
-            <p className='font-inter font-sm text-gray-500'>
+            <p className='font-inter font-sm text-gray-500 dark:text-gray-400'>
               {post.creator.email}
             </p>
           </div>
@@ -57,9 +57,11 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           />
         </div>
       </div>
-      <p className='my-4 font-satoshi font-sm text-gray-700'>{post.prompt}</p>
+      <p className='my-4 font-satoshi font-sm text-gray-700 dark:text-gray-300'>
+        {post.prompt}
+      </p>
       <p
-        className='font-inter text-sm blue_gradient cursor-pointer'
+        className='font-inter text-sm blue_gradient dark:text-blue-600 cursor-pointer'
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
         #{post.tag}
@@ -67,20 +69,22 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
 
       {session?.user.id === post.creator._id && pathName === '/profile' && (
         <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
-          <p
-            className='font-inter text-sm green_gradient cursor-pointer
+          <button
+            type='button'
+            className='font-inter py-1.5 px-5 text-sm border border-green-400 rounded-full green_gradient cursor-pointer active:translate-y-1 transition-all
           '
             onClick={handleEdit}
           >
             Edit
-          </p>
-          <p
-            className='font-inter text-sm orange_gradient cursor-pointer
+          </button>
+          <button
+            type='button'
+            className='font-inter rounded-full  py-1.5 px-5 text-sm orange_gradient border border-orange-400 cursor-pointer active:translate-y-1 transition-all
           '
             onClick={handleDelete}
           >
             Delete
-          </p>
+          </button>
         </div>
       )}
     </div>

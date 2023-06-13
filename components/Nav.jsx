@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { ThemeButton } from './ThemeButton'
 
 const Nav = () => {
   const { data: session } = useSession()
@@ -25,6 +26,7 @@ const Nav = () => {
         />
         <p className='logo_text'>Promptopia</p>
       </Link>
+      <ThemeButton />
       {/* Desktop Navigation  */}
       <div className='sm:flex hidden'>
         {session?.user ? (

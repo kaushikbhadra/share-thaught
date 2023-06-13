@@ -16,7 +16,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
         className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
       >
         <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>
+          <span className='font-satoshi font-semibold text-base text-gray-700 dark:text-gray-200'>
             Your AI Prompt
           </span>
           <textarea
@@ -28,7 +28,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           />
         </label>
         <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>
+          <span className='font-satoshi font-semibold text-base text-gray-700 dark:text-gray-200'>
             Tag{' '}
             <span className='font-normal'>
               (#product, #webdevlopment, #idea)
@@ -43,13 +43,17 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           />
         </label>
         <div className='flex-end mx-3 mb-5 gap-4'>
-          <Link prefetch={false} href='/' className='text-gray-500 text-sm'>
+          <Link
+            prefetch={false}
+            href='/'
+            className='text-gray-500 text-sm dark:text-white'
+          >
             Cancel
           </Link>
           <button
             type='submit'
             disabled={submitting}
-            className='flex items-center px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
+            className='flex items-center px-5 py-1.5 text-sm bg-orange-600 hover:bg-orange-700 rounded-full text-white'
           >
             {submitting ? (
               <>

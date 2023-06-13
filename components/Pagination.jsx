@@ -41,13 +41,15 @@ const Pagination = ({
       </div>
       <div className='hidden sm:flex sm:flex-1 sm:items-center sm:justify-between'>
         <div>
-          <p className='text-sm text-gray-700'>
+          <p className='text-sm text-gray-700 dark:text-gray-300'>
             Showing
-            <span className='font-semibold m-1'>
+            <span className='font-semibold m-1 dark:font-bold'>
               {skip + 1} - {Math.min(skip + postPerPage, totalPosts)}
             </span>
             of
-            <span className='font-semibold m-1'>{totalPosts}</span>
+            <span className='font-semibold m-1 dark:font-bold'>
+              {totalPosts}
+            </span>
             <span className='mr-2'>results</span>
           </p>
         </div>
