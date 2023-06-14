@@ -20,8 +20,8 @@ const RootLayout = ({ children }) => {
     <html lang='en' suppressHydrationWarning>
       <body>
         <Provider>
-          <div className='main'>
-            <div className='gradient'></div>
+          <div className='main dark:before:bg-none dark:bg-gray-900'>
+            <div className='gradient dark:bg-none'></div>
           </div>
           <main className='app'>
             <Nav />
